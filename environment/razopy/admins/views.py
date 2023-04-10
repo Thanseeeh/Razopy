@@ -20,8 +20,11 @@ def admin_base(request):
     return render(request, 'admins_temp/admin-base.html')
 
 
+#Admin logout
 def admin_logout(request):
-    return render(request, 'admins_temp/admin-home.html')
+    auth.logout(request)
+    messages.success(request,'you are logged out')
+    return redirect('admin_login')
 
 
 #Admin login
