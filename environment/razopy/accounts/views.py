@@ -108,7 +108,7 @@ def otp_func(request):
                 del request.session['password']
 
                 messages.success(request, 'Account created successfully!')
-                return redirect('sign_up')
+                return redirect('login_user')
             else:
                 messages.info(request, 'Invalid OTP or OTP has expired.')
                 return redirect('otp_func')
