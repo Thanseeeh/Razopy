@@ -90,27 +90,30 @@
                       <p class="mb-0 text-light">Enter the fields and Create a New account</p>
                     </div>
                     <div class="card-body">
-                      <form role="form" action="{% url 'sign_up' %}" method="POST">
-
-                        {% csrf_token %}
-
-                        <div class="mb-3">
-                          <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-addon" name="username">
-                        </div>
-                        <div class="mb-3">
-                          <input type="email" class="form-control" placeholder="Email address" aria-label="Email" aria-describedby="email-addon" name="email">
-                        </div>
-                        <div class="mb-3">
-                          <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password">
-                        </div>
-                        <div class="mb-3">
-                          <input type="password" class="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="confirm_password-addon" name="confirm_password">
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn bg-gradient-info w-30 mt-4 mb-0" style="background: #0ea4ff; color: white; font-weight: 700;">Sign Up</button>
-                        </div>
+                      <form role="form" action="{% url 'sign_up' %}" method="post">
+                          {% csrf_token %}
+                  
+                          <div class="mb-3">
+                              {{ form.username }}
+                          </div>
+                          <div class="mb-3">
+                              {{ form.email }}
+                          </div>
+                          <div class="mb-3">
+                              {{ form.phone }}
+                          </div>
+                          <div class="mb-3">
+                              {{ form.password }}
+                          </div>
+                          <div class="mb-3">
+                              {{ form.confirm_password }}
+                          </div>
+                          <div class="text-center">
+                              <button type="submit" class="btn bg-gradient-info w-30 mt-4 mb-0" style="background: #0ea4ff; color: white; font-weight: 700;">Sign Up</button>
+                          </div>
                       </form>
-                    </div>
+                  </div>
+                  
                     <div class="form-group">
 
                         {% for message in messages %}

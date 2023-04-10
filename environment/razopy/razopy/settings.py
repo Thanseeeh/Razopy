@@ -73,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'razopy.wsgi.application'
+AUTH_USER_MODEL = 'accounts.Account'
 
 
 # Database
@@ -80,8 +81,12 @@ WSGI_APPLICATION = 'razopy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'razopy',
+        'USER': 'postgres',
+        'PASSWORD': 'ellikkal6',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -130,3 +135,16 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+   }
+
+# smtp configuration
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='raazopy@gmail.com'
+EMAIL_HOST_PASSWORD='glosbpxancnwmbcc'
+EMAIL_USE_TLS=True
