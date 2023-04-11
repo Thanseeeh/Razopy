@@ -1,0 +1,35 @@
+{% extends 'users_temp/base.html' %}
+
+{% block title %}
+Razopy-Create-Token
+{% endblock %}
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row mt-4" style="margin-left: 20%; width: 100%;">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title text-center">Create New Token</h3>
+              <form class="d-flex flex-column w-50 mx-auto mt-5" id="tokenform" method="POST" action="{% url 'create' %}" role="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Name</label><br>
+                {{ form.name }}<br>
+                <label>Description</label><br>
+                {{ form.description }}<br>
+                <label>Price</label><br>
+                {{ form.price }}<br>
+                <label>Brand</label><br>
+                {{ form.brand }}<br>
+                <label>Token upload</label>
+                {{ form.image }}<br>
+                <input type="submit" value="Create" class="">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

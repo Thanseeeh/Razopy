@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import TokenForm
+from django.apps import apps
+from .models import Token
+
+Account = apps.get_model('accounts', 'Account')
 
 # Create your views here.
 
@@ -10,7 +15,9 @@ def home(request):
 
 #Items
 def items(request):
-    return render(request, 'users_temp/items.html')
+    tokens = Token.objects.all()
+    context = {'tokens': tokens}
+    return render(request, 'users_temp/items.html', context)
 
 
 #Catogories
@@ -35,7 +42,21 @@ def cart(request):
 
 #Create
 def create(request):
-    return render(request, 'users_temp/create.html')
+    user_id = request.user.id
+    user = Account.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = TokenForm(request.POST, request.FILES)
+        if form.is_valid():
+            token = form.save(commit=False)
+            token.owner = user
+            token.save()
+            return redirect('home')
+    else:
+        form = TokenForm()
+    context = {'form': form, 'user': user, 'user_id': user_id}
+    return render(request, 'users_temp/create.html', context)
+
+
 
 
 #Base
