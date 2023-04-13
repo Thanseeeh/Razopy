@@ -4,6 +4,7 @@ from django.apps import apps
 from .models import Token
 from accounts.forms import Profileform
 from django.contrib import messages
+from django.conf import settings
 
 Account = apps.get_model('accounts', 'Account')
 Category = apps.get_model('admins', 'Category')
@@ -63,6 +64,15 @@ def edit_profile(request):
     
     context = {'user': user, 'form': form}
     return render(request, 'users_temp/edit-profile.html', context)
+
+
+#Remove profile
+def remove_profile(request, user_id):
+    account = Account.objects.get(id=user_id)
+    account.profile_pic = settings.MEDIA_ROOT + '/profile.png'
+    account.save()
+    messages.success(request, 'Oops! your profile picture removed')
+    return redirect(edit_profile)
 
 
 #Cart
