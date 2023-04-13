@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import TokenForm
 from django.apps import apps
 from .models import Token
+from accounts.forms import Profileform
+from django.contrib import messages
 
 Account = apps.get_model('accounts', 'Account')
 Category = apps.get_model('admins', 'Category')
@@ -33,9 +35,34 @@ def notice(request):
 #Profile
 def profile(request):
     if 'email' in request.session:
-        return render(request, 'users_temp/profile.html')
+        user = request.user
+        tokens = Token.objects.filter(owner=user)
+        total_token = tokens.count()
+        context = {'tokens': tokens, 'total_token': total_token}
+        return render(request, 'users_temp/profile.html', context)
     else:
         return redirect('/')
+
+
+#Edit Profile
+def edit_profile(request):
+    user = request.user
+    form = Profileform(instance=user)
+
+    if request.method == 'POST':
+        form = Profileform(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            user = form.save(commit=False)
+            user.save()
+            messages.success(request, 'Success!! Your profile has been updated successfully.')
+            return redirect('edit_profile')
+        else:
+            print(form.errors)
+            messages.error(request, 'There was an error updating your profile.')
+    
+    context = {'user': user, 'form': form}
+    return render(request, 'users_temp/edit-profile.html', context)
 
 
 #Cart
@@ -59,7 +86,7 @@ def create(request):
                 token = form.save(commit=False)
                 token.owner = user
                 token.save()
-                return redirect('home')
+                return redirect('items')
         else:
             form = TokenForm()
         context = {'form': form, 'user': user, 'user_id': user_id, 'data': data}
@@ -72,4 +99,6 @@ def create(request):
 
 #Base
 def base(request):
-    return render(request, 'users_temp/base.html')
+    user = Account.objects.all()
+    context = {'user': user}
+    return render(request, 'users_temp/base.html', context)

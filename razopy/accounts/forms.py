@@ -1,6 +1,7 @@
 from django import forms
 from .models import Account
 
+#Signup form
 class Registrationform(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}))
@@ -21,3 +22,17 @@ class Registrationform(forms.ModelForm):
 
         if password != confirm_password:
             raise forms.ValidationError("Entered passwords do not match each other!")
+        
+
+
+#Profile form
+class Profileform(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ['email', 'username', 'phone', 'profile_pic']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone number'}),
+        }

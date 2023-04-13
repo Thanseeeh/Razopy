@@ -88,7 +88,7 @@
                         {% csrf_token %}
                         <div class="card-body">
                             <h3 class="font-weight-bold">We sent your code</h3>
-                            <p class="small">Enter the confirmation OTP below.</p>
+                            <p class="small">Enter the confirmation OTP below that we send to your Email address.</p>
                             <input type="text" placeholder="Enter OTP" class="form-control" id="otp" name="otp">
                             <input type="hidden" id="email" name="email" value="{{ email }}">
                             <button type="submit" class="btn btn-primary mt-3">Submit</a>

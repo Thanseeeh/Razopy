@@ -10,7 +10,7 @@ Razopy-items
 <div class="main-panel">
     <div class="content-wrapper">
       <div class="row">
-        <div class="col-xl-6 col-sm-6 grid-margin stretch-card mt-5">
+        <div class="col-xl-6 col-sm-12 grid-margin stretch-card mt-5">
           <div class="card" style="border-radius: 40px;">
             <div class="container col-xl-12 col-sm-12" style="position: absolute; width: 100%; margin-top: 2rem; font-size: 1.7vw;">
               <h2 class="font-weight-bold">Create Your Own Token</h2>
@@ -21,7 +21,7 @@ Razopy-items
             <img src="{% static 'img/item-img1.avif' %}" style="border-radius: 40px">
           </div>
         </div>
-        <div class="col-xl-6 col-sm-6 grid-margin stretch-card mt-5">
+        <div class="col-xl-6 col-sm-12 grid-margin stretch-card mt-5">
           <div class="card" style="border-radius: 40px;  background: #3b3c51;">
               <div class="container col-xl-12 col-sm-12" style="position: absolute; width: 100%; margin-top: 2rem; font-size: 1.7vw; text-align: end;">
                 <h2 class="font-weight-bold">Assets and Income?</h2>
@@ -53,10 +53,10 @@ Razopy-items
       <div class="row mt-5" style="width: 88%; margin-left: 6%;">
 
             {% for token in tokens %}
-            <div class="col-sm-4 grid-margin">
+            <div class="col-sm-6 col-md-4 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <img src="{{ token.image.url }}" style="width: 100%">
+                        <img src="{{ token.image.url }}" style="width: 100%; height: 394.2px">
                         <h3 class="mt-3">{{token.name}}</h3>
                         <div class="row">
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
