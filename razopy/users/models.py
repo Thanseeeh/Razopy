@@ -20,3 +20,34 @@ class Token(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Cart(models.Model):
+    cart_owner = models.ForeignKey('accounts.Account', on_delete=models.SET_NULL, blank=True, null=True)
+    submitted = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    total_price = models.FloatField(default=0)
+
+    def __str__(self):
+        return str(self.id)
+    
+
+class CartItems(models.Model):
+    cart_items = models.ForeignKey(Token, on_delete=models.SET_NULL, blank=True, null=True, related_name='cart_items')
+    account = models.ForeignKey('accounts.Account', on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Payments(models.Model):
+    amount = models.FloatField(blank=True, null=True)
+    sold = models.BooleanField(default=False, null=True, blank=False)
+    method = models.CharField(max_length=200, default='Razorpay')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    transaction_id = models.CharField(max_length=200, null=True)
+    cart = models.ForeignKey(Cart, on_delete=models.SET_NULL, blank=True, null=True)
+    customer = models.ForeignKey('accounts.Account', on_delete=models.SET_NULL,  blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)

@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TokenForm
 from django.apps import apps
-from .models import Token
+from .models import *
 from accounts.forms import Profileform
 from django.contrib import messages
 from django.conf import settings
@@ -11,9 +11,11 @@ Category = apps.get_model('admins', 'Category')
 # Create your views here.
 
 
+
 #Home
 def home(request):
     return render(request, 'users_temp/index.html', {})
+
 
 
 #Items
@@ -23,14 +25,17 @@ def items(request):
     return render(request, 'users_temp/items.html', context)
 
 
+
 #Catogories
 def categories(request):
     return render(request, 'users_temp/categories.html')
 
 
+
 #Notice
 def notice(request):
     return render(request, 'users_temp/notice.html')
+
 
 
 #Profile
@@ -43,6 +48,7 @@ def profile(request):
         return render(request, 'users_temp/profile.html', context)
     else:
         return redirect('/')
+
 
 
 #Edit Profile
@@ -66,6 +72,7 @@ def edit_profile(request):
     return render(request, 'users_temp/edit-profile.html', context)
 
 
+
 #Remove profile
 def remove_profile(request, user_id):
     account = Account.objects.get(id=user_id)
@@ -75,13 +82,71 @@ def remove_profile(request, user_id):
     return redirect(edit_profile)
 
 
+
 #Cart
 def cart(request):
-    if 'email' in request.session:
-        return render(request, 'users_temp/cart.html')
+    cart_owner = request.user
+    cart = Cart.objects.filter(cart_owner=cart_owner, submitted=False).first()
+    cart_items = CartItems.objects.filter(account=cart_owner).select_related('cart_items')
+    items_count = cart_items.count()
+    
+    # total price
+    if not cart_items.exists():
+        total_price = 0
+        if cart:
+            cart.total_price = 0
+            cart.save()
     else:
-        return redirect('login_user')
+        total_price = cart.total_price if cart else 0
+       
+    context = {
+        'cart_owner': cart_owner,
+        'cart': cart,
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'items_count': items_count,
+    }
+    return render(request,'users_temp/cart.html',context)
+
+
+
+
+#Add to Cart
+def addtocart(request, id):
+    token = get_object_or_404(Token, id=id)
+    user = request.user
+    cart, created = Cart.objects.get_or_create(cart_owner=user, submitted=False)
+    cart_item, created = CartItems.objects.get_or_create(cart_items=token, account=user)
+    cart_item.save()
+    cart.total_price += token.price
+    cart.save()
+    if created:
+        messages.success(request, 'Added to cart successfully')
+    return redirect('items')
+
+
+
+#Remove item from cart
+def remove_item(request, id):
+    cart_owner = request.user
+    cart = Cart.objects.filter(cart_owner=cart_owner, submitted=False).first()
+    cart_item = CartItems.objects.get(id=id)
+    if cart_item:
+        cart.total_price -= cart_item.cart_items.price
+        cart_item.delete()
+        cart_items = CartItems.objects.filter(account=cart_owner)
+        if not cart_items.exists():
+            cart.total_price = 0
+        cart.save()
+    return redirect('cart')
+
         
+
+
+#Checkout
+def checkout(request):
+    return render(request, 'users_temp/checkout.html')
+
 
 
 #Create
@@ -103,7 +168,6 @@ def create(request):
     else:
         return redirect('home')
     return render(request, 'users_temp/create.html', context)
-
 
 
 

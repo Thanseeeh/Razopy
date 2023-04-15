@@ -4,3 +4,5 @@ from .models import *
 # Register your models here.
 
 admin.site.register(Token)
+admin.site.register(Cart)
+admin.site.register(Payments)

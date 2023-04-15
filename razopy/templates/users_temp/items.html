@@ -10,6 +10,13 @@ Razopy-items
 <div class="main-panel">
     <div class="content-wrapper">
       <div class="row">
+        {% for message in messages %}
+
+        <div class="alert alert-success" style="text-align: center; width: 41%; margin-left: 32%;">
+          Token is successfully added into <a href="{% url 'cart' %}" class="alert-link">Cart</a>. Go and check it out.
+        </div>
+
+        {% endfor %}
         <div class="col-xl-6 col-sm-12 grid-margin stretch-card mt-5">
           <div class="card" style="border-radius: 40px;">
             <div class="container col-xl-12 col-sm-12" style="position: absolute; width: 100%; margin-top: 2rem; font-size: 1.7vw;">
@@ -67,8 +74,8 @@ Razopy-items
                             <h6 class="text-muted font-weight-normal mt-1">Brand: {{token.brand}}</h6>
                             </div>
                             <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right" style="font-size: 26px;">
-                                <a href=""><i class="mdi mdi-cart-outline text-success"></i></a>
-                              </div>
+                                <a href="{% url 'addtocart' token.id %}"><i class="mdi mdi-cart-outline text-success"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
