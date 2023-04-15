@@ -60,26 +60,30 @@ Razopy-items
       <div class="row mt-5" style="width: 88%; margin-left: 6%;">
 
             {% for token in tokens %}
-            <div class="col-sm-6 col-md-4 grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="{{ token.image.url }}" style="width: 100%; height: 394.2px">
-                        <h3 class="mt-3">{{token.name}}</h3>
-                        <div class="row">
-                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
-                                <div class="d-flex d-sm-block d-md-flex align-items-center">
-                                    <h4 class="mb-0">${{token.price|floatformat:2}}</h4>
-                                    <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
-                                </div>
-                            <h6 class="text-muted font-weight-normal mt-1">Brand: {{token.brand}}</h6>
-                            </div>
-                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right" style="font-size: 26px;">
-                                <a href="{% url 'addtocart' token.id %}"><i class="mdi mdi-cart-outline text-success"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <div class="col-sm-6 col-md-4 grid-margin">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="{% url 'single_item' token.id %}"><img src="{{ token.image.url }}" style="width: 100%; height: 394.2px"></a>
+                          <h3 class="mt-3">{{token.name}}</h3>
+                          <div class="row">
+                              <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                  <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                      <h4 class="mb-0">${{token.price|floatformat:2}}</h4>
+                                      <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+                                  </div>
+                              <h6 class="text-muted font-weight-normal mt-1">Brand: {{token.brand}}</h6>
+                              </div>
+                              <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right" style="font-size: 26px;">
+                                {% if token.owner.username == user.username %}
+                                
+                                {% else %}
+                                  <a href="{% url 'addtocart' token.id %}"><i class="mdi mdi-cart-outline text-success"></i></a>
+                                {% endif %}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             {% endfor %}
         
       </div>

@@ -20,7 +20,7 @@ def home(request):
 
 #Items
 def items(request):
-    tokens = Token.objects.all()
+    tokens = Token.objects.filter(is_active=True)
     context = {'tokens': tokens}
     return render(request, 'users_temp/items.html', context)
 
@@ -168,6 +168,32 @@ def create(request):
     else:
         return redirect('home')
     return render(request, 'users_temp/create.html', context)
+
+
+
+#Single view of tokens
+def single_item(request, id):
+    product = Token.objects.get(id=id)
+    context = {'product': product}
+    return render(request, 'users_temp/single-item.html', context)
+
+
+
+#Cancel Sale
+def cancel_sale(request, id):
+    token = Token.objects.get(id=id)
+    token.is_active = False
+    token.save()
+    return redirect('single_item', id=id)
+
+
+
+#Sell the token
+def sell(request, id):
+    token = Token.objects.get(id=id)
+    token.is_active = True
+    token.save()
+    return redirect('single_item', id=id)
 
 
 
