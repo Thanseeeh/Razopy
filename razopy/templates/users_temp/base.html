@@ -145,9 +145,10 @@
               <li class="nav-item dropdown d-none d-lg-block">
                 <a class="nav-link btn btn-primary create-new-button" id="createbuttonDropdown" href="{% url 'create' %}">Create Token</a>
               </li>
-              <div class="preview-icon bg-dark" style="font-size: 24px">
-                <a href="{% url 'cart' %}"><i class="mdi mdi-cart-outline text-success"></i></a>
-              </div>
+              <a class="nav-link count-indicator dropdown-toggle" href="{% url 'cart' %}" style="font-size: 24px">
+                <i class="mdi mdi-cart"></i>
+                <span class="count bg-success">{{ total_items }}</span>
+              </a>
 
               {% if request.user.is_authenticated %}
 

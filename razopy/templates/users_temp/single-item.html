@@ -39,7 +39,7 @@
 
                             <div class="d-flex">
                                 <a href="{% url 'addtocart' product.id %}" class="btn btn-primary large" >Add to cart</a>
-                                <a href="" class="btn btn-primary large mx-4" >Buy Token</a>
+                                <a href="{% url 'checkout' %}" class="btn btn-primary large mx-4" >Buy Token</a>
                             </div>
 
                         {% endif %}
