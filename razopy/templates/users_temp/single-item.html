@@ -21,10 +21,11 @@
                         </div>
                         <div class="small mb-3">Category: {{ product.category }}</div>
                         <p class="lead">{{ product.description}}</p>
-                        <div class="d-flex justify-content-between mt-5 mb-3">
+                        <div class="d-flex justify-content-between mt-5 mb-1">
                             <p>Owner: {{ product.owner.username }}</p>
                             <p>Author: {{ product.owner.username }}</p>
                         </div>
+                        <p class="mb-3">created on: </p>
                         {% if product.owner.username == user.username %}
 
                             <div class="d-flex">

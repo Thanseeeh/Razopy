@@ -118,7 +118,8 @@ def addtocart(request, id):
     cart, created = Cart.objects.get_or_create(cart_owner=user, submitted=False)
     cart_item, created = CartItems.objects.get_or_create(cart_items=token, account=user)
     cart_item.save()
-    cart.total_price += token.price
+    if created:
+        cart.total_price += token.price
     cart.save()
     if created:
         messages.success(request, 'Added to cart successfully')
@@ -145,7 +146,15 @@ def remove_item(request, id):
 
 #Checkout
 def checkout(request):
-    return render(request, 'users_temp/checkout.html')
+    user = request.user
+    cart = Cart.objects.filter(cart_owner=user)
+    cart_items = CartItems.objects.filter(account=user)
+    items_count = cart_items.count()
+    total_price = 0
+    for item in cart_items:
+        total_price += item.cart_items.price
+    context = {'cart': cart, 'cart_items': cart_items, 'items_count': items_count, 'total_price': total_price}
+    return render(request, 'users_temp/checkout.html', context)
 
 
 
