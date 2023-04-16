@@ -4,7 +4,9 @@ from django.apps import apps
 from .models import *
 from accounts.forms import Profileform
 from django.contrib import messages
+import razorpay
 from django.conf import settings
+from razopy.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
 
 Account = apps.get_model('accounts', 'Account')
 Category = apps.get_model('admins', 'Category')
@@ -39,12 +41,18 @@ def notice(request):
 
 
 #Profile
+client = razorpay.Client(auth=(RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY))
 def profile(request):
     if 'email' in request.session:
+        order_amount = 50000
+        order_currency = 'INR'
+
+        payment_order = client.order.create(dict(amount=order_amount, currency=order_currency, payment_capture=1))
+        payment_order_id = payment_order['id']
         user = request.user
         tokens = Token.objects.filter(owner=user)
         total_token = tokens.count()
-        context = {'tokens': tokens, 'total_token': total_token}
+        context = {'tokens': tokens, 'total_token': total_token, 'amount': 500, 'api_key': RAZORPAY_API_KEY, 'order_id': payment_order_id}
         return render(request, 'users_temp/profile.html', context)
     else:
         return redirect('/')

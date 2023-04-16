@@ -45,6 +45,7 @@ class Account(AbstractBaseUser):
     username    = models.CharField(max_length=100, unique=True)
     phone       = models.CharField(max_length=20)
 
+    wallet      = models.FloatField(default=0)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login  = models.DateTimeField(auto_now_add=True)
     is_admin    = models.BooleanField(default=False)
