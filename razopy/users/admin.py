@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Token)
 admin.site.register(Cart)
 admin.site.register(Payments)
+admin.site.register(Wallet)

@@ -87,7 +87,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'razopy',
+        'NAME': 'razopy_db',
         'USER': 'postgres',
         'PASSWORD': 'ellikkal6',
         'HOST': 'localhost',
@@ -166,5 +166,5 @@ TWILIO_PHONE_NUMBER = '+15677042685'
 
 
 #razor pay integration
-RAZORPAY_API_KEY = 'rzp_test_ndVzH991SCEaRQ'
-RAZORPAY_API_SECRET_KEY = 'YbJ2jQg1cTty46w9yDS810o0'
+RAZORPAY_KEY_ID = 'rzp_test_07RZnKDz7tu7P2'
+RAZORPAY_KEY_SECRET = 'wKJuNem5tDrx1IL3OO1yzbom'

@@ -8,6 +8,14 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
+      <div class="form-controls">
+
+        {% for message in messages %}
+        <div class="alert alert-danger w-50 text-center" role="alert" style="margin-left: 25%">
+            {{message}}
+        </div>
+        {% endfor %}
+    </div>
         <section class="" style="background-color: #191c24; width: 90%; margin-top: 4%; margin-left: 5%;">
             <div class="container h-100">
               <div class="row d-flex justify-content-center align-items-center h-100">
@@ -60,7 +68,7 @@
                                         <tr>
                                         <td><span class="ps-1"> {{ i.cart_items.name }} </span></td>
                                         <td> {{ i.cart_items.owner.username }} </td>
-                                        <td> alihaninshah </td>
+                                        <td> {{ i.cart_items.author.username }} </td>
                                         <td class="font-weight-bold"> ${{ i.cart_items.price }} </td>
                                         <td><a class="btn btn-outline-danger mx-2" href="{% url 'remove_item' i.id %}" onclick="return confirm('Remove from cart?')">delete</a></td>
                                         </tr>

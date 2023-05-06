@@ -111,7 +111,7 @@ def generate_otp():
 
 #Sending OTP
 def send_otp(otp, phone):
-    client = Client('AC533d11df9be75ebc56c5b24db413f828', '603e9f085ad7413b241c261bf3df3d83')
+    client = Client('AC533d11df9be75ebc56c5b24db413f828', 'fd54d9c138eac633edeb07231f22b079')
     message = client.messages.create(
         body=f'Your OTP is {otp}.',
         from_='+15677042685',
